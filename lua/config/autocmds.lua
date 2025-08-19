@@ -21,3 +21,19 @@ vim.api.nvim_create_autocmd("FileType", {
     end
   end,
 })
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.name == "typescript-tools" then
+      client.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+        if result and result.diagnostics then
+          result.diagnostics = vim.tbl_filter(function(diagnostic)
+            return diagnostic.code ~= 6133 and diagnostic.code ~= 6192
+          end, result.diagnostics)
+        end
+        vim.lsp.handlers["textDocument/publishDiagnostics"](err, result, ctx, config)
+      end
+    end
+  end,
+})
