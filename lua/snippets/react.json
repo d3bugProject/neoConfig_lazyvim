@@ -1,0 +1,26 @@
+[
+  {
+    "title": "react component",
+    "trigger": "xrnf",
+    "snippet": "import React from \\\"react\\\";\\nimport { View, Text } from \\\"react-native\\\";\\n\\nexport default function ${TM_FILENAME_MAJ}() {\\n  return (\\n    <View>\\n      <Text>${TM_FILENAME_BASE}</Text>\\n    </View>\\n  );\\n}\\n",
+    "import": ""
+  },
+  {
+    "title": "use state",
+    "trigger": "xus",
+    "snippet": "const [${1}, set${1maj}] = useState($2)",
+    "import": "import {useState} from \"react\""
+  },
+  {
+    "title": "console log maj",
+    "trigger": "clm",
+    "snippet": "console.log(${1}, ${1maj})",
+    "import": ""
+  },
+  {
+    "title": "use effect",
+    "trigger": "xuf",
+    "snippet": "useEffect(()=>{\\n    ${1}\\n},[${2}])",
+    "import": "import {useEffect} from \"react\""
+  }
+]

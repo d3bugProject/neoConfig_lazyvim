@@ -1,0 +1,14 @@
+[
+  {
+    "title": "commentaire 1 ligne",
+    "trigger": "cmt",
+    "snippet": "// $1",
+    "import": ""
+  },
+  {
+    "title": "commentaire multi ligne",
+    "trigger": "cmts",
+    "snippet": "/* $1 */",
+    "import": ""
+  }
+]

@@ -1,3 +1,6 @@
+if false then
+  return {}
+end
 return {
   "neovim/nvim-lspconfig",
   config = function()
