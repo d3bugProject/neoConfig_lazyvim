@@ -75,7 +75,7 @@ return {
         -- Configuration filesystem avec fichiers cachés forcés
         filesystem = {
           filtered_items = {
-            visible = true, -- Rendre les éléments filtrés visibles
+            visible = false, -- Rendre les éléments filtrés visibles
             hide_dotfiles = false, -- NE PAS cacher les fichiers commençant par .
             hide_gitignored = false, -- NE PAS cacher les fichiers dans .gitignore
             hide_by_name = {

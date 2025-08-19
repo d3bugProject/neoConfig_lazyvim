@@ -1,4 +1,4 @@
-if true then
+if false then
   return {}
 end
 return {
@@ -27,6 +27,7 @@ return {
           follow_symlinks = false,
           -- Utiliser les patterns d'exclusion
           exclude = {
+            ".DS_Store",
             "node_modules",
             ".git",
             "*.min.js",
