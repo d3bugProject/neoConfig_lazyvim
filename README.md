@@ -1,1 +1,0 @@
-# neoConfig_lazyvim
