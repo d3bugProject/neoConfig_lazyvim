@@ -3,19 +3,19 @@
     "title": "view ",
     "trigger": "view",
     "snippet": "<View className={`${2}`}>${1}</View>",
-    "import": "import { View } from \"react-native\""
+    "import": "import { View } from \"react-native\";"
   },
   {
     "title": "text",
     "trigger": "text",
     "snippet": "<Text className={`${2}`}>${1}</Text>",
-    "import": "import {Text} from \"react-native\""
+    "import": "import { Text } from \"react-native\";"
   },
   {
     "title": "router",
     "trigger": "router",
     "snippet": "const router = useRouter()",
-    "import": "import {useRouter} from \"expo-router\""
+    "import": "import {useRouter} from \"expo-router\";"
   },
   {
     "title": "params ",

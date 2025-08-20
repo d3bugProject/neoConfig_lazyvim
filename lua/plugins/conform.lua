@@ -14,6 +14,13 @@ return {
       markdown = { "prettier" },
       lua = { "stylua" },
     },
+    formatters = {
+      organize_imports = {
+        command = "npx",
+        args = { "organize-imports-cli", "$FILENAME" },
+        stdin = false,
+      },
+    },
   },
   keys = {
     {
