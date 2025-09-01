@@ -1,8 +1,0 @@
-[
-  {
-    "trigger": "xxxx",
-    "snippet": "export default function ${1:MyComponent}() {\n  return (\n    <div>$0</div>\n  );\n}",
-    "import": "import React from \"react\";",
-    "description": "React Functional Component boilerplate"
-  }
-]

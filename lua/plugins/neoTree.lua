@@ -1,6 +1,6 @@
 return {
   -- ======================================================
-  -- NAVIGATION PRINCIPALE - NEO-TREE
+  -- NAVIGATION PRINCIPALE - NEO-TREEA
   -- ======================================================
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -75,7 +75,7 @@ return {
         -- Configuration filesystem avec fichiers cachés forcés
         filesystem = {
           filtered_items = {
-            visible = false, -- Rendre les éléments filtrés visibles
+            visible = true, -- Rendre les éléments filtrés visibles
             hide_dotfiles = false, -- NE PAS cacher les fichiers commençant par .
             hide_gitignored = false, -- NE PAS cacher les fichiers dans .gitignore
             hide_by_name = {

@@ -26,31 +26,5 @@ vim.opt.listchars = {
   precedes = "…",
 }
 
--- ======================================================
--- AUTO-RELOAD DE LA CONFIGURATION
--- ======================================================
-
--- Recharge automatiquement la config après sauvegarde
-vim.api.nvim_create_autocmd("BufWritePost", {
-  pattern = {
-    "**/nvim/lua/**/*.lua", -- Tous les fichiers lua dans nvim/lua/
-    "**/nvim/lua/config/*.lua", -- Spécifiquement le dossier config
-    "**/nvim/lua/plugins/*.lua", -- Spécifiquement le dossier plugins
-    "**/nvim/snippets/*.json", -- Fichiers snippets JSON
-    "**/nvim/init.lua", -- Fichier init.lua principal
-  },
-  callback = function()
-    -- Sauvegarde la position actuelle
-    local cursor_pos = vim.api.nvim_win_get_cursor(0)
-
-    -- Recharge la configuration
-    vim.cmd("source %")
-
-    -- Affiche un message de confirmation
-    vim.notify("Configuration rechargée ! 🔄", vim.log.levels.INFO)
-
-    -- Restaure la position du curseur
-    vim.api.nvim_win_set_cursor(0, cursor_pos)
-  end,
-  desc = "Auto-reload Neovim config",
-})
+vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#268bd2", fg = "#002b36", bold = true })
+vim.api.nvim_set_hl(0, "SolarizedOsakaNormal", { bg = "#002b36", fg = "#839496" })

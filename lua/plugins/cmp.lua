@@ -1,74 +1,96 @@
 return {
-  "saghen/blink.cmp",
-  event = "InsertEnter",
-  version = "v0.*",
-  opts_extend = { "sources.default", "sources.compat" },
-  dependencies = {
-    {
-      "L3MON4D3/LuaSnip",
-      lazy = true,
-      dependencies = {
-        {
-          "rafamadriz/friendly-snippets",
-          config = function()
-            require("luasnip.loaders.from_vscode").lazy_load()
-            require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath("config") .. "/lua/snippets" } })
-          end,
-        },
-      },
-      opts = { history = true, delete_check_events = "TextChanged" },
+  { "saghen/blink.nvim", enabled = false },
+  { "saghen/blink.cmp", enabled = false },
+  {
+    "hrsh7th/nvim-cmp",
+    enabled = true,
+    event = "InsertEnter",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "saadparwaiz1/cmp_luasnip",
+      -- AJOUT : Support Tailwind avec couleurs
+      "roobert/tailwindcss-colorizer-cmp.nvim",
     },
+    opts = function(_, opts)
+      local cmp = require("cmp")
+      opts.preselect = cmp.PreselectMode.None
+      opts.completion = {
+        completeopt = "menu,menuone,noselect",
+        keyword_length = 1,
+      }
+      opts.sources = cmp.config.sources({
+        { name = "nvim_lsp", priority = 1000 },
+        { name = "luasnip", priority = 750 },
+        { name = "buffer", priority = 500 },
+        { name = "path", priority = 250 },
+      })
+
+      -- AJOUT : Formatage pour afficher les couleurs Tailwind
+      opts.formatting = {
+        format = function(entry, vim_item)
+          local tailwind_ok, tailwind_formatter = pcall(require, "tailwindcss-colorizer-cmp")
+          if tailwind_ok then
+            vim_item = tailwind_formatter.formatter(entry, vim_item)
+          end
+          return vim_item
+        end,
+      }
+
+      opts.mapping = cmp.mapping.preset.insert({
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          local luasnip = require("luasnip")
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          local luasnip = require("luasnip")
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ["<CR>"] = cmp.mapping({
+          i = function(fallback)
+            if cmp.visible() and cmp.get_active_entry() then
+              cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+            else
+              fallback()
+            end
+          end,
+          s = cmp.mapping.confirm({ select = true }),
+        }),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.abort(),
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      })
+      -- Ferme la fenêtre cmp quand tu navigues dans un snippet
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "LuasnipJump",
+        callback = function()
+          local ok, cmp = pcall(require, "cmp")
+          if ok and cmp.visible() then
+            cmp.close()
+          end
+        end,
+      })
+      -- Optionnel : apparence
+      opts.window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+      }
+      return opts
+    end,
   },
-  opts = function()
-    return {
-      snippets = {
-        preset = "luasnip",
-      },
-      sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
-      },
-      cmdline = {
-        enabled = false,
-        -- sources = { ... } -- Si tu veux activer la complétion en ligne de commande plus tard
-      },
-      completion = {
-        list = {
-          selection = {
-            auto_insert = false,
-          },
-        },
-        accept = {
-          auto_brackets = { enabled = true },
-        },
-        menu = {
-          border = "rounded",
-          winblend = 10,
-          winhighlight = "Normal:CatppuccinSurface0,FloatBorder:CatppuccinSurface2,Search:None",
-          draw = { treesitter = { "lsp" } },
-        },
-        documentation = {
-          auto_show = true,
-          window = {
-            border = "rounded",
-            winblend = 10,
-            winhighlight = "Normal:CatppuccinSurface0,FloatBorder:CatppuccinSurface2,Search:None",
-          },
-          auto_show_delay_ms = 100,
-        },
-      },
-      signature = {
-        enabled = true,
-        window = {
-          border = "rounded",
-          winblend = 10,
-          winhighlight = "Normal:CatppuccinSurface0,FloatBorder:CatppuccinSurface2,Search:None",
-        },
-      },
-      keymap = {
-        preset = "enter",
-        ["<C-space>"] = { "show", "hide" },
-        ["<C-e>"] = { "show_documentation", "hide_documentation" },
-      },
-    }
-  end,
 }
