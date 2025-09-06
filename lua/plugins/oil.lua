@@ -24,7 +24,7 @@ return {
       })
 
       -- Raccourci pour oil.nvim (Space + o)
-      vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>", { desc = "Ouvrir Oil.nvim" })
+      vim.keymap.set("n", "<leader>oi", "<cmd>Oil<CR>", { desc = "Ouvrir Oil.nvim" })
     end,
   },
 }

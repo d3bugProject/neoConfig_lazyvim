@@ -1,0 +1,12 @@
+{
+  "task create": {
+    "prefix": "tc",
+    "body": ["- ( ) $1 "],
+    "description": "creation de task"
+  },
+  "title crea neorg": {
+    "prefix": "title",
+    "body": ["**** $1"],
+    "description": "creation de  title in neorg"
+  }
+}

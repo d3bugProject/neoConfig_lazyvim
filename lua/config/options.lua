@@ -28,3 +28,4 @@ vim.opt.listchars = {
 
 vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#268bd2", fg = "#002b36", bold = true })
 vim.api.nvim_set_hl(0, "SolarizedOsakaNormal", { bg = "#002b36", fg = "#839496" })
+vim.g.maplocalleader = ","
