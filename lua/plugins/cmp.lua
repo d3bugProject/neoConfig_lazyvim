@@ -16,6 +16,27 @@ return {
     },
     opts = function(_, opts)
       local cmp = require("cmp")
+      
+      -- Autocmd pour corriger les parenthèses uniquement dans les balises JSX
+      vim.api.nvim_create_autocmd({"TextChangedI", "CompleteDone"}, {
+        pattern = "*",
+        callback = function()
+          vim.defer_fn(function()
+            local line = vim.api.nvim_get_current_line()
+            local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+            -- Corrige uniquement <Component()> ou <Component ()>
+            local jsx_start, jsx_end, jsx_component = line:find("<(%u%w*)%s*%(%)")
+            if jsx_component then
+              local new_line = line:gsub("<" .. jsx_component .. "%s*%(%)%s*", "<" .. jsx_component .. " ")
+              if new_line ~= line then
+                vim.api.nvim_set_current_line(new_line)
+                local new_pos = jsx_start + #jsx_component
+                vim.api.nvim_win_set_cursor(0, {row, new_pos})
+              end
+            end
+          end, 50)
+        end,
+      })
       opts.preselect = cmp.PreselectMode.None
       opts.completion = {
         completeopt = "menu,menuone,noselect",
@@ -60,16 +81,13 @@ return {
             fallback()
           end
         end, { "i", "s" }),
-        ["<CR>"] = cmp.mapping({
-          i = function(fallback)
-            if cmp.visible() and cmp.get_active_entry() then
-              cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-            else
-              fallback()
-            end
-          end,
-          s = cmp.mapping.confirm({ select = true }),
-        }),
+        ["<CR>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.confirm({ select = true })
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.abort(),
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
