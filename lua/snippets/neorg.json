@@ -1,12 +1,49 @@
 {
+  "project create": {
+    "prefix": "proj",
+    "body": [
+      "## 🚀 Project: $1",
+      "$2"
+    ],
+    "description": "Créer un project section avec icône"
+  },
+  "category create": {
+    "prefix": "cat",
+    "body": [
+      "   ### 📂 Catégorie : $1",
+      "   $2"
+    ],
+    "description": "Créer une catégorie avec icône"
+  },
+  "sous-tache create": {
+    "prefix": "sous",
+    "body": [
+      "   🧩 Sous-tâche : $1",
+      "   $2"
+    ],
+    "description": "Créer une sous-tâche hiérarchisée pour listes markdown"
+  },
   "task create": {
     "prefix": "tc",
-    "body": ["- ( ) $1 "],
-    "description": "creation de task"
+    "body": [
+      "   - 🟣 $1",
+      "$2"
+    ],
+    "description": "Créer une tâche à faire (icône) hiérarchique"
+  },
+  "desc block": {
+    "prefix": "desc",
+    "body": [
+      "📝 **Desc:** $1",
+      "$2"
+    ],
+    "description": "Bloc de description à insérer où tu veux"
   },
   "title crea neorg": {
     "prefix": "title",
-    "body": ["**** $1"],
-    "description": "creation de  title in neorg"
+    "body": [
+      "**** 🏷️ $1"
+    ],
+    "description": "Créer un titre Neorg avec icône"
   }
 }

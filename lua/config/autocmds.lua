@@ -51,3 +51,26 @@ if ok_cmp and ok_luasnip then
     end,
   })
 end
+-- Toggle entre 🟣 et ✅ pour tâches commençant par '>'
+
+local function toggle_markdown_icon_task()
+  local line = vim.api.nvim_get_current_line()
+  -- Gère '> 🟣 ' et '> ✅ ' avec indentation éventuelle
+  if line:match("^%s*>%s*🟣 ") then
+    -- Change 🟣 → ✅
+    line = line:gsub("^(%s*>%s*)🟣 ", "%1✅ ", 1)
+    vim.api.nvim_set_current_line(line)
+  elseif line:match("^%s*>%s*✅ ") then
+    -- Change ✅ → 🟣
+    line = line:gsub("^(%s*>%s*)✅ ", "%1🟣 ", 1)
+    vim.api.nvim_set_current_line(line)
+  end
+end
+
+-- Keymap <leader>i uniquement en markdown
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown" },
+  callback = function()
+    vim.keymap.set("n", "<leader>i", toggle_markdown_icon_task, { buffer = true, desc = "Toggle icon task" })
+  end,
+})
