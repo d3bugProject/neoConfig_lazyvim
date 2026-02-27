@@ -78,5 +78,9 @@
       ""
     ],
     "description": "try catch simple"
+  },
+  "import": {
+    "prefix": "imp",
+    "body": ["import $1 from \"$2\""]
   }
 }

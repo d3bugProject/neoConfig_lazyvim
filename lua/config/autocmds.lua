@@ -55,22 +55,23 @@ end
 
 local function toggle_markdown_icon_task()
   local line = vim.api.nvim_get_current_line()
-  -- Gère '> 🟣 ' et '> ✅ ' avec indentation éventuelle
   if line:match("^%s*>%s*🟣 ") then
-    -- Change 🟣 → ✅
+    print("Mon autocmd est chargé")
     line = line:gsub("^(%s*>%s*)🟣 ", "%1✅ ", 1)
     vim.api.nvim_set_current_line(line)
   elseif line:match("^%s*>%s*✅ ") then
-    -- Change ✅ → 🟣
+    print("Mon autocmd est chargé")
     line = line:gsub("^(%s*>%s*)✅ ", "%1🟣 ", 1)
     vim.api.nvim_set_current_line(line)
   end
 end
 
--- Keymap <leader>i uniquement en markdown
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "markdown" },
-  callback = function()
-    vim.keymap.set("n", "<leader>i", toggle_markdown_icon_task, { buffer = true, desc = "Toggle icon task" })
+  callback = function(args)
+    -- DEBUG : assure-toi que ce code passe
+    print("Set keymap for buffer", args.buf)
+    vim.keymap.set("n", "<leader>i", toggle_markdown_icon_task, { buffer = args.buf, desc = "Toggle icon task" })
+    -- vim.keymap.set("n", "<F8>", function() print("F8 marche") end, { buffer = args.buf })
   end,
 })
